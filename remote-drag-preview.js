@@ -15,7 +15,8 @@ var createTokenPreview = function(tokenId, show, x, y, userId) {
   for (let p of t.layer.preview.children.filter(t=>t.id==tokenId && t._remotePreview))  p.destroy();
   if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
   if (!show) return;
-  c.draw().then(c => {
+  c.draw()//.then(c => {
+    //console.log(c)
     c.layer.preview.addChild(c);
     c._dragPassthrough=true;
     c.visible = true;
@@ -46,9 +47,9 @@ var createTokenPreview = function(tokenId, show, x, y, userId) {
       }
       line.name = `${t.id}-line`;
       line.alpha = 1;
-    console.log(line)
+    //console.log(canvas.grid.children)
       canvas.grid.addChild(line);
-    });
+    //});
 }
 
 Hooks.once("socketlib.ready", () => {
@@ -57,13 +58,14 @@ Hooks.once("socketlib.ready", () => {
 });
 
 Hooks.on("refreshToken", (token)=>{
-  if (token._animation || token.isPreview) {
+  if (token._remotePreview) return;
+  if (token._animation || token.isPreview) 
     for (let marker of canvas.grid.children.filter(c => c.name == `${token.id}-line`))
         canvas.grid.removeChild(marker);
-  }
+  
   if (!token.layer.preview.children.find(t=>t.id==token.id)) return;
   if (game.user.isGM && !game.settings.get('remote-drag-preview', 'showGM')) return;
-  window.emitTokenPreview(token.id, token.hover, token.x, token.y, game.user.id)
+  window.emitTokenPreview(token.id, token.isPreview, token.x, token.y, game.user.id)
 });
 
 Hooks.on("updateToken", (token)=>{

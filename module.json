@@ -5,11 +5,11 @@
   "title": "Remote Drag Preview",
   "description": "See where other players are dragging their tokens",
   "authors": [{"name":"Xaukael"}],
-  "version": "0.2.1",
+  "version": "1.0.0",
 	"socket": true,
   "compatibility": {
       "minimum": "10",
-      "verified": "10"
+      "verified": "11"
     },
 	"socket": true,
   "scripts": ["remote-drag-preview.js"],
@@ -22,7 +22,7 @@
           }
       ]
   },
-  "url": "https://github.com/xaukael/card-tokens/",
+  "url": "https://github.com/xaukael/remote-drag-preview/",
   "manifest": "https://github.com/xaukael/remote-drag-preview/raw/main/module.json",
   "download": "https://github.com/xaukael/remote-drag-preview/raw/main/remote-drag-preview.zip"
 }
