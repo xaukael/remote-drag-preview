@@ -5,7 +5,7 @@
   "title": "Remote Drag Preview",
   "description": "See where other players are dragging their tokens",
   "authors": [{"name":"Xaukael"}],
-  "version": "0.2.0",
+  "version": "0.2.1",
 	"socket": true,
   "compatibility": {
       "minimum": "10",

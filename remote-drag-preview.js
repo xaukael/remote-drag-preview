@@ -52,7 +52,7 @@ var createTokenPreview = function(tokenId, show, x, y, userId) {
 }
 
 Hooks.once("socketlib.ready", () => {
-	window.socketForTokenPreviews = socketlib.registerModule("ws");
+	window.socketForTokenPreviews = socketlib.registerModule("remote-drag-preview");
 	window.socketForTokenPreviews.register("createTokenPreview", createTokenPreview);
 });
 
