@@ -20,7 +20,7 @@ var createTokenPreview = function(tokenId, show, x, y, userId) {
     c._dragPassthrough=true;
     c.visible = true;
     c._remotePreview = true;
-    for (let marker of canvas.app.stage.children.filter(c => c.name == `${t.id}-line`)) canvas.app.stage.removeChild(marker);
+    for (let marker of canvas.grid.children.filter(c => c.name == `${t.id}-line`)) canvas.grid.removeChild(marker);
       const line = new PIXI.Graphics();
       line.lineStyle({
         width,
@@ -46,7 +46,8 @@ var createTokenPreview = function(tokenId, show, x, y, userId) {
       }
       line.name = `${t.id}-line`;
       line.alpha = 1;
-      canvas.app.stage.addChild(line);
+    console.log(line)
+      canvas.grid.addChild(line);
     });
 }
 
@@ -57,8 +58,8 @@ Hooks.once("socketlib.ready", () => {
 
 Hooks.on("refreshToken", (token)=>{
   if (token._animation || token.isPreview) {
-    for (let marker of  canvas.app.stage.children.filter(c => c.name == `${token.id}-line`))
-        canvas.app.stage.removeChild(marker);
+    for (let marker of canvas.grid.children.filter(c => c.name == `${token.id}-line`))
+        canvas.grid.removeChild(marker);
   }
   if (!token.layer.preview.children.find(t=>t.id==token.id)) return;
   if (game.user.isGM && !game.settings.get('remote-drag-preview', 'showGM')) return;
@@ -67,7 +68,7 @@ Hooks.on("refreshToken", (token)=>{
 
 Hooks.on("updateToken", (token)=>{
   for (let t of token.layer.preview.children.filter(t=>t.id==token.id && t._remotePreview)) t.destroy();
-  for (let marker of  canvas.app.stage.children.filter(c => c.name == `${token.id}-line`)) canvas.app.stage.removeChild(marker);
+  for (let marker of  canvas.grid.children.filter(c => c.name == `${token.id}-line`)) canvas.grid.removeChild(marker);
 });
 
 Hooks.once("init", async () => {
