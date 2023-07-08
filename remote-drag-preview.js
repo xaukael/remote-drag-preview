@@ -1,11 +1,9 @@
 var createTokenPreview = function(tokenId, show, x, y, userId) {
   //console.log("createTokenPreview", tokenId, show, x, y, userId)
-  const arrowLength = 30; // how long is the arrow in px.
-  const arrowWidth = 15;  // how wide is the arrow in px.
-  const width = 10;       // width of the line.
-  const alpha = 1;
-  const fill = game.users.get(userId).color;
+
   let t = canvas.tokens.get(tokenId);
+  if (!t) return;
+  if (t.document.hidden) return;
   let c = t.clone();
   c.document.x = x;
   c.document.y = y;
@@ -21,6 +19,12 @@ var createTokenPreview = function(tokenId, show, x, y, userId) {
   c._dragPassthrough=true;
   c.visible = true;
   c._remotePreview = true;
+  if (!game.settings.get('remote-drag-preview', 'drawArrow')) return;
+  const arrowLength = 30; // how long is the arrow in px.
+  const arrowWidth = 15;  // how wide is the arrow in px.
+  const width = 10;       // width of the line.
+  const alpha = 1;
+  const fill = game.users.get(userId).color;
   for (let marker of canvas.grid.children.filter(c => c.name == `${t.id}-line`)) canvas.grid.removeChild(marker);
     const line = new PIXI.Graphics();
     line.lineStyle({
@@ -48,7 +52,7 @@ var createTokenPreview = function(tokenId, show, x, y, userId) {
     line.name = `${t.id}-line`;
     line.alpha = 1;
   //console.log(canvas.grid.children)
-    if (game.settings.get('remote-drag-preview', 'drawArrow'))
+    
     canvas.grid.addChild(line);
     //});
 }
